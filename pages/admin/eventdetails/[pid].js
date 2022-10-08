@@ -339,7 +339,7 @@ const Eventdetail = ({ username }) => {
 
       onSnapshot(collection(db, userId), (snapshot) => {
         //console.log("MM", snapshot.docs());
-        seteventData(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        seteventData(snapshot.docs.map((doc) => [({ ...doc.data(), id: doc.id })]));
       });
       // console.log("data", eventData);
       // setphoneNum(phoneNum);
@@ -754,10 +754,7 @@ const Eventdetail = ({ username }) => {
                                {threedata.isChecked && threedata.isChecked === true ? <li>{threedata.name}</li>:null } 
                               
                             </ul>
-                          )
-                        
-                            
-                         
+                          ) 
                         })}
                     </td>
                     <td>
@@ -766,9 +763,6 @@ const Eventdetail = ({ username }) => {
                     <td>
                       {eventdata.PostFiveAns}
                     </td>
-
-                     
-
                     <td>
                         {eventdata.PostSixAns}
                     </td>
