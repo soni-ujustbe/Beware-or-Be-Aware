@@ -48,6 +48,8 @@ const Eventdetail = ({ username }) => {
     const [fourcheck, setFourCheck] = useState('');
     const [fivecheck, setFiveCheck] = useState('');
     const [sixcheck, setSixCheck] = useState('');
+    const [sevencheck, setSevenCheck] = useState('');
+    const [eightcheck, setEightCheck] = useState('');
 
  
   const [error, seterror] = useState(false);
@@ -107,6 +109,7 @@ const Eventdetail = ({ username }) => {
     
 
     seteventName("");
+    seteventData([]);
     setzoomlink("");
     setdate("");
     setformImgUrls("");
@@ -339,7 +342,7 @@ const Eventdetail = ({ username }) => {
 
       onSnapshot(collection(db, userId), (snapshot) => {
         //console.log("MM", snapshot.docs());
-        seteventData(snapshot.docs.map((doc) => [({ ...doc.data(), id: doc.id })]));
+        seteventData(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       });
       // console.log("data", eventData);
       // setphoneNum(phoneNum);
@@ -631,7 +634,93 @@ const Eventdetail = ({ username }) => {
       {/* map the function  */}
       <section className='box userlisting'>
         <h2>
-          User Details[Registration form]
+          Feedback Form
+        </h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Sr No.</th>
+              <th>Username</th>
+              
+              <th>Question 1</th>
+              <th>Question 2</th>
+              {/* <th>Question 2 input</th> */}
+              <th>Question 3</th>
+              {/* <th>Question 3 input</th> */}
+              
+              <th>Question 4</th>
+              {/* <th>Question 4 input</th> */}
+             
+              <th>Question 5</th>
+              {/* <th>Question 5 input</th> */}
+             
+            
+              <th>Question 6</th>
+              <th>Ph No.</th>
+              <th>login time</th>
+              
+             
+              {/* <th>logout time</th> */}
+            </tr>
+          </thead>
+          <tbody>
+            {
+                eventData && eventData.map((eventdata, key = i) => {
+                console.log("event data", eventdata);
+                return (
+                  <tr key={key}>
+                    <td>{key + 1}</td>
+                    <td>{eventdata.username}</td>
+                    <td>{eventdata.PostOneAns} [{eventdata.PostOneInput}]</td>
+                    
+                    <td>{eventdata.PostTwoAns}</td>
+                    
+               
+  
+             
+                    <td>  {eventdata.PostThreeAns && eventdata.PostThreeAns.map((threedata,i)=>{
+                          return(
+                            <ul  key={i} className='checkbox-data'>
+                               {threedata.isChecked && threedata.isChecked === true ? <li>{threedata.name}</li>:null } 
+                              
+                            </ul>
+                          )
+                        
+                            
+                         
+                        })}
+                     </td>
+                    
+                    
+                   
+                    <td>{eventdata.PostFourAns}</td>
+                    <td>{eventdata.PostFiveAns}</td>
+                    
+                    <td>{eventdata.PostSixAns}</td>
+
+                  
+                    <td>{eventdata.phoneNum}</td>
+                    <td>{eventdata.loginTime}</td>
+                   
+
+                    
+                 
+
+                  </tr>
+                )
+
+              })
+            }{
+              eventData ? <div></div> : null
+            }
+          </tbody>
+        </table>
+      </section>
+
+
+      <section className='box userlisting'>
+        <h2>
+          Registration Form
         </h2>
         <table>
           <thead>
@@ -644,88 +733,14 @@ const Eventdetail = ({ username }) => {
               <th>Question 2</th>
               <th>Question 2 input</th>
               <th>Question 3</th>
-              <th>Question 4</th>
-              <th>Question 5</th>
-              <th>Question 6</th>
-              <th>Ph No.</th>
-              <th>login time</th>
-
               
-             
-              {/* <th>logout time</th> */}
-            </tr>
-            <tr>
-              <th></th>
-              <th></th>
-              <th>Will you like to get monthly calendar of UJustBe's events in advance?</th>
-              <th></th>
-              <th>Will you like to get calendar invite or reminder on mobile for UJustBe's monthly meeting?</th>
-              <th></th>
-              <th>Which of the following activities in UJustBe you think that you can do it easily? </th>
-              <th>As a Partner if you need any help, to whom you will connect first?</th>
-              <th>As a mentor, which of the below qualities that you will look for in your Connect?</th>
-              <th>Which of the below role cannot pass referral?  </th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-                eventData && eventData.map((eventdata, key = i) => {
-                console.log("event data", eventdata);
-                return (
-                  <tr key={key}>
-                    <td>{key + 1}</td>
-                    <td>{eventdata.username}</td>
-                    <td>{eventdata.PreOneAns}</td>
-                    <td>{eventdata.preOneInput}</td>
-                    <td>{eventdata.PreTwoAns}</td>
-                    <td>{eventdata.preTwoInput}</td>
-                    <td>
-                      {eventdata.PreThreeAns}
-                     </td>
-                    <td>{eventdata.PreFourAns}</td>
-                    <td>
-                        {eventdata.PreFiveAns}
-                     </td>
-                    <td>
-                      {eventdata.PreSixAns}
-                    </td>
-                 <td>
-                      {eventdata.phoneNum}
-                      </td>
-                    <td>
-                      {eventdata.loginTime}
-                      </td>
-                  </tr>
-                )
-
-              })
-            }{
-              eventData ? <div></div> : null
-            }
-          </tbody>
-        </table>
-      </section>
-
-
-      {/* map the function  */}
-      <section className='box userlisting'>
-        <h2>
-          Post Event
-        </h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Sr No.</th>
-              <th>Username</th>
-              <th>Question 1</th>
-              <th>Question 1 input</th>
-              <th>Question 2</th>
-              <th>Question 3</th> 
               <th>Question 4</th>
+             
               <th>Question 5</th>
+             
+            
               <th>Question 6</th>
+
               <th>Ph No.</th>
               <th>login time</th>
             </tr>
@@ -738,40 +753,40 @@ const Eventdetail = ({ username }) => {
                   <tr key={key}>
                     <td>{key + 1}</td>
                     <td>{eventdata.username}</td>
-                    <td>
-                      {eventdata.PostOneAns}
-                    </td>
-                    <td>
-                      {eventdata.PostOneInput}
-                    </td>
-                    <td>
-                      {eventdata.PostTwoAns}
-                    </td>
-                    <td>
-                    {eventdata.PostThreeAns && eventdata.PostThreeAns.map((threedata,i)=>{
+                    <td>{eventdata.PreOneAns} </td>
+                    <td>{eventdata.PreOneInput} </td>
+                  
+
+                    <td>{eventdata.PreTwoAns}</td>
+
+                    <td>  {eventdata.PreThreeAns && eventdata.PreThreeAns.map((threedata,i)=>{
                           return(
                             <ul  key={i} className='checkbox-data'>
                                {threedata.isChecked && threedata.isChecked === true ? <li>{threedata.name}</li>:null } 
                               
                             </ul>
-                          ) 
+                          )
+                        
+                            
+                         
                         })}
-                    </td>
-                    <td>
-                      {eventdata.PostFourAns}
-                    </td>
-                    <td>
-                      {eventdata.PostFiveAns}
-                    </td>
-                    <td>
-                        {eventdata.PostSixAns}
-                    </td>
-                    <td>
-                      {eventdata.phoneNum}
-                      </td>
-                    <td>
-                      {eventdata.loginTime}
-                      </td>
+                     </td>
+                    <td>{eventdata.PreFourAns}</td>
+                    
+                    
+                    
+                    <td>{eventdata.PreFiveAns}</td>
+                    <td>{eventdata.PreSixAns}</td>
+                    
+                    
+
+                  
+                    <td>{eventdata.phoneNum}</td>
+                    <td>{eventdata.loginTime}</td>
+                   
+
+                    
+                 
 
                   </tr>
                 )
@@ -783,7 +798,6 @@ const Eventdetail = ({ username }) => {
           </tbody>
         </table>
       </section>
-
 
     </Layout>
   );
