@@ -81,7 +81,7 @@ const Header = (props)=> {
   // } 
 
     const getsingleusersdata = async () => {
-      const docRef = doc(db, "usersdata", phoneNum);
+      const docRef = doc(db, "usersdata", "phoneNum");
       const docSnap = await getDoc(docRef);
       // console.log(docSnap);
 
