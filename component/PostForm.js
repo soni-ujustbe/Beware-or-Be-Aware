@@ -12,24 +12,15 @@ const db = getFirestore();
 //Image import
 import topbannerimg from '../public/images/topbanner.png';
 
-const fivecheckdata = [
-    { name: "Identify constraints in Personal Relationships" },
-    { name: "Identify constraints in Professional/Business Relationships" },
-    { name: "Identify constraints related to Personal Health" },
-    { name: "Identify constraints related to Professional/Business Health" },
-    { name: "Identify constraints related to Personal Wealth" },
-    { name: "Identify constraints related to Professional/Business Wealth" },
-    
+const threecheckdata = [
+    { name: "To pass valid and verified referrals" },
+    { name: "To close the referral received by providing the best quality product/service to the client" },
+    { name: "To become mentor of a contributing connect" },
+    { name: "To be part of UJustBe Nucleus team to help other partners" },   
+    { name: "All of the above" },   
 ];
 
-const sixcheckdata = [
 
-    { name: "You are not alone" },
-    { name: "You don't have to work alone to achieve what you want" },
-    { name: "New Connections with strong bonding" },
-    { name: "Expanded Self" },
-    
-];
 
 const PostForm = () => {
 
@@ -43,14 +34,14 @@ const PostForm = () => {
 
     const [onecheck, setoneCheck] = useState('');
     const [twocheck, setTwoCheck] = useState('');
-    const [threecheck, setThreeCheck] = useState('');
+    const [threecheck, setThreeCheck] = useState(threecheckdata);
     const [fourcheck, setFourCheck] = useState([]);
-    const [fivecheck, setFiveCheck] = useState(fivecheckdata);
+    const [fivecheck, setFiveCheck] = useState('');
 
-    const [sixcheck, setSixCheck] = useState(sixcheckdata);
+    const [sixcheck, setSixCheck] = useState('');
 
     const [oneQuestionInput, setOneQuestionInput] = useState("");
-    const [twoQuestionInput, setTwoQuestionInput] = useState("");
+    // const [twoQuestionInput, setTwoQuestionInput] = useState("");
 
    
     const [UserData, setUserData] = useState([]);
@@ -83,7 +74,7 @@ const PostForm = () => {
             PostOneAns: onecheck,
             PostOneInput:oneQuestionInput,
             PostTwoAns: twocheck,
-            PostTwoInput:twoQuestionInput,
+            // PostTwoInput:twoQuestionInput,
             PostThreeAns: threecheck,
             PostFourAns: fourcheck,
             PostFiveAns: fivecheck,
@@ -99,8 +90,7 @@ const PostForm = () => {
         if (onecheck==="" || twocheck==="" || threecheck==="" || fourcheck==="" || fivecheck==="" || sixcheck==="")
         {
             seterror(true);
-            setFiveCheck(fivecheckdata);
-            setSixCheck(sixcheckdata);
+            setThreeCheck(threecheckdata);
         }
         else {
             const isLogin = localStorage.getItem("ucore");
@@ -121,11 +111,10 @@ const PostForm = () => {
         setoneCheck("");
         setOneQuestionInput("");
         setTwoCheck("");
-        setTwoQuestionInput("");
-        setThreeCheck("")
+        setThreeCheck(threecheck)
         setFourCheck("");
-        setFiveCheck(fivecheck);
-        setSixCheck(sixcheck);
+        setFiveCheck("");
+        setSixCheck("");
         // setformbgImage("");
         // setwhatsappLink("");
         //   Router.push('/dashboard');
@@ -150,13 +139,13 @@ const PostForm = () => {
         }
 
     };
+    const questionThree = (e) => {
+        const {name,checked}= e.target;
+        let tempThreeData=threecheck.map((threedetails)=>
+        threedetails.name === name ? { ...threedetails, isChecked:checked } : threedetails);
+        setThreeCheck(tempThreeData)
 
-    const questionThree = (event) => {
-        const target = event.target;
-        if (target.checked) {
-            setThreeCheck(target.value);
-            console.log(event.target.value);
-        }
+        console.log("threequestion",threecheck);
     };
 
     const questionFour = (event) => {
@@ -167,65 +156,29 @@ const PostForm = () => {
         }
     };
 
-
-    const questionFive = (e) => {
-        const {name,checked}= e.target;
-    //     if(name === "AllSelect"){
-    //       let tempSevenData=sevencheck.map((sevendetails)=>{
-    //             return {...sevendetails, isChecked:checked}  });
-    //         setSevenCheck(tempSevenData);
-
-    //     }
-    //    else{
-        let tempSevenData=fivecheck.map((fivedetails)=>
-        fivedetails.name === name ? { ...fivedetails, isChecked:checked } : fivedetails);
-        setFiveCheck(tempSevenData)
-
-        console.log("fivetquestion",fivecheck);
-    //    }
-       
-        // const target = event.target;
-        // if (target.checked) {
-        //     setSevenCheck(target.value);
-        //     console.log(event.target.value);
-        // }
-
+    
+    const questionFive = (event) => {
+        const target = event.target;
+        if (target.checked) {
+            setFiveCheck(target.value);
+            console.log(event.target.value);
+        }
     };
 
     const questionSix = (event) => {
-        const {name,checked}= event.target;
-    //     if(name === "AllSelect"){
-    //       let tempSevenData=sevencheck.map((sevendetails)=>{
-    //             return {...sevendetails, isChecked:checked}  });
-    //         setSevenCheck(tempSevenData);
-
-    //     }
-    //    else{
-        let tempSixData=sixcheck.map((sixdetails)=>
-        sixdetails.name === name ? { ...sixdetails, isChecked:checked } : sixdetails);
-        setSixCheck(tempSixData)
-
-        console.log("sixquestion",sixcheck);
-    //    }
-       
-        // const target = event.target;
-        // if (target.checked) {
-        //     setSevenCheck(target.value);
-        //     console.log(event.target.value);
-        // }
-
+        const target = event.target;
+        if (target.checked) {
+            setSixCheck(target.value);
+            console.log(event.target.value);
+        }
     };
 
 
-    useEffect(() =>{
-        setFiveCheck(fivecheckdata);
-     
-
-    },[])
+    
 
     useEffect(() =>{
        
-        setSixCheck(sixcheckdata);
+        setThreeCheck(threecheckdata);
 
     },[])
 
@@ -356,291 +309,251 @@ const PostForm = () => {
                                 </ul>
                             </div>
 
-                               {/* 1st question */}
-                               <div className="form-row radio-buttons">
-                                <h2>1. Is "Being Inclusive" easy for you?<sup>*</sup> </h2>
+                                {/* 1st question */}
+                        <div className="form-row radio-buttons">
+                            <h2>1. Do you think that the Online Monthly Meeting is useful for Partners?<sup>*</sup></h2>
+                            <ul>
 
-                                <ul>
-                                    <li>
-                                        <label htmlFor="1A">
-                                            <input
-                                                id="1A"
-                                                value="Yes"
-                                                name="questionOne"
-                                                type="radio"
-                                                onChange={questionOne}
-                                                checked={onecheck == 'Yes'} />
-                                            <div className='custom_radio'></div>
-                                            Yes
-                                        </label>
+                                <li>
 
-                                    </li>
+                                    <label htmlFor="1A">
+                                        <input
+                                            id="1A"
+                                            value="Yes"
+                                            name="questionOne"
+                                            type="radio"
+                                            onChange={questionOne}
+                                            checked={onecheck == 'Yes'} />
+                                        <div className='custom_radio'></div>
+                                        Yes </label>
+                                </li>
+                                <li>
+                                    <label htmlFor="1B">
+                                        <input
+                                            id="1B"
+                                            value="No"
+                                            name="questionOne"
+                                            type="radio"
+                                            onChange={questionOne}
+                                            checked={onecheck == 'No'} />
+                                        <div className='custom_radio'></div>
+                                        No</label>
+                                </li>
 
-                                    <li>
-                                        <label htmlFor="1B">
-                                            <input
-                                                id="1B"
-                                                value="No"
-                                                name="questionOne"
-                                                type="radio"
-                                                onChange={questionOne}
-                                                checked={onecheck == 'No'} />
-                                            <div className='custom_radio'></div>
-                                            No </label>
-                                    </li>
+                                
 
-                                    {onecheck==="No" && (  <li>
+                                {onecheck==="No" && (  <li>
                                         <input type="text"
                                              id="oneInput"
                                             value={oneQuestionInput}
                                             name="questionOne"
-                                            placeholder='Share reason'
+                                            placeholder='Share reason '
                                             required
                                             onChange={(event) => {
                                                 setOneQuestionInput(event.target.value)
                                             }} />
                                 </li> )}
-                                </ul>
-                                {
-                                    error ? <div className="error"><p>this is required</p></div> : null
-                                }
 
-                            </div>                           
+                            </ul>
+                            {
+                                error ? <div className="error"><p>this is required</p></div> : null
+                            }
+
+                        </div>
 
 
-                            {/* 2nd question */}
-                            <div className="form-row radio-buttons">
-                                <h2>2. Are you now aware of your constraints?<sup>*</sup></h2>
+                        {/* 2nd question */}
+                        <div className="form-row radio-buttons">
+                            <h2>2. Do you like the Know your Listed Partner section?<sup>*</sup></h2>
 
-                                <ul>
-                                    <li>
-                                        <label htmlFor="2A">
-                                            <input
-                                                id="2A"
-                                                value="No"
-                                                name="questionTwo"
-                                                type="radio"
-                                                onChange={questionTwo}
-                                                checked={twocheck == 'No'} />
-                                            <div className='custom_radio'></div>
-                                            No
-                                        </label>
-
-                                    </li>
-
-                                    <li>
-                                        <label htmlFor="2B">
-                                            <input
-                                                id="2B"
-                                                value="Yes"
-                                                name="questionTwo"
-                                                type="radio"
-                                                onChange={questionTwo}
-                                                checked={twocheck == 'Yes'} />
-                                            <div className='custom_radio'></div>
-                                            Yes</label>
-                                    </li>
-
-                                    {twocheck==="Yes" && (  <li>
-                                        <input type="text"
-                                             id="twoInput"
-                                            value={twoQuestionInput}
+                            <ul>
+                                <li>
+                                    <label htmlFor="2A">
+                                        <input
+                                            id="2A"
+                                            value="Yes"
                                             name="questionTwo"
-                                            placeholder='Share your 2 constraints'
-                                            required
-                                            onChange={(event) => {
-                                                setTwoQuestionInput(event.target.value)
-                                            }} />
-                                </li> )}
+                                            type="radio"
+                                            onChange={questionTwo}
+                                            checked={twocheck == 'Yes'} />
+                                        <div className='custom_radio'></div>
+                                        Yes
+                                    </label>
 
-                                </ul>
-                                {
-                                    error ? <div className="error"><p>this is required</p></div> : null
-                                }
+                                </li>
 
-                            </div>
+                                <li>
+                                    <label htmlFor="2B">
+                                        <input
+                                            id="2B"
+                                            value="No"
+                                            name="questionTwo"
+                                            type="radio"
+                                            onChange={questionTwo}
+                                            checked={twocheck == 'No'} />
+                                        <div className='custom_radio'></div>
+                                        No</label>
+                                </li>
 
+                                
 
-                            {/* 3rd question */}
-                            <div className="form-row radio-buttons">
-                                <h2>3. Which one of the below constraints which you think that you can work upon yourself without anybody’s help?<sup>*</sup> </h2>
-                                <ul>
+                            </ul>
+                            {
+                                error ? <div className="error"><p>this is required</p></div> : null
+                            }
 
-                                    <li>
-                                        <label htmlFor="3A">
-                                            <input
-                                                id="3A"
-                                                value="Amygdala Hijack"
-                                                name="questionThree"
-                                                type="radio"
-                                                onChange={questionThree}
-                                                checked={threecheck == 'Amygdala Hijack'} />
-                                            <div className='custom_radio'></div>
-                                            Amygdala Hijack</label>
-                                    </li>
+                        </div>
 
-                                    <li>
-                                        <label htmlFor="3B">
-                                            <input
-                                                id="3B"
-                                                value="Change Blindness"
-                                                name="questionThree"
-                                                type="radio"
-                                                onChange={questionThree}
-                                                checked={threecheck == 'Change Blindness'} />
-                                            <div className='custom_radio'></div>
-                                            Change Blindness</label>
-                                    </li>
+                     
 
-                                    <li>
-                                        <label htmlFor="3C">
-                                            <input
-                                                id="3C"
-                                                value="Already-Always Listening"
-                                                name="questionThree"
-                                                type="radio"
-                                                onChange={questionThree}
-                                                checked={threecheck == 'Already-Always Listening'} />
-                                            <div className='custom_radio'></div>
-                                            Already-Always Listening</label>
-                                    </li>
+                        {/* 3nd question */}
+                        <div className="form-row radio-buttons">
+                            <h2>3. After witnessing UJustBe’s Growth Journey, which of the following option seems to be a possibility for you to contribute into this growth journey? <sup>*</sup> </h2>
+                            <ul>
 
-                                   
+                                <li >
+                                    {threecheck && threecheck.map((threedata)=>(
+                                    <>
 
-                                </ul>
-                                {
-                                    error ? <div className="error"><p>this is required</p></div> : null
-                                }
-                            </div>
+                                    <div > 
+ 
+                                                <input
+                                                    id={threedata.name}
+                                                    value={threedata}
+                                                    name={threedata.name}
+                                                    checked={threedata?.isChecked || false }
+                                                    type="checkbox"
+                                                    // required
+                                                    onChange={questionThree} />
+                                            
+                                                <label  className='checkbox-label' htmlFor={threedata.name}> {threedata.name} </label>
+                                    </div>
+                                    </>
+                                    ))}
+                                </li>
+                            </ul>
+                            {
+                                error ? <div className="error"><p>this is required</p></div> : null
+                            }
 
-                            {/* 4th question */}
-                            <div className="form-row radio-buttons">
-                                <h2>4. Which one of the below constraints which you think that is impacting you the most?<sup>*</sup></h2>
+                        </div>
+
+                        {/* 4th question */}
+                        <div className="form-row radio-buttons">
+                                <h2>4. Do you think that you can identify and pass referrals for some specific Listed Partners or to Listed Partners in any specific category, in this Diwali? <sup>*</sup></h2>
                                 <ul>
 
                                     <li>
                                         <label htmlFor="4A">
                                             <input
                                                 id="4A"
-                                                value="Amygdala Hijack"
+                                                value="Yes, then name few names or categories"
                                                 name="questionFour"
                                                 type="radio"
                                                 onChange={questionFour}
-                                                checked={fourcheck == 'Amygdala Hijack'} />
+                                                checked={fourcheck == 'Yes, then name few names or categories'} />
                                             <div className='custom_radio'></div>
-                                            Amygdala Hijack</label>
+                                            Yes, then name few names or categories</label>
                                     </li>
+
+                                    
 
                                     <li>
                                         <label htmlFor="4B">
                                             <input
                                                 id="4B"
-                                                value="Change Blindness"
+                                                value="No"
                                                 name="questionFour"
                                                 type="radio"
                                                 onChange={questionFour}
-                                                checked={fourcheck == 'Change Blindness'} />
+                                                checked={fourcheck == 'No'} />
                                             <div className='custom_radio'></div>
-                                            Change Blindness</label>
+                                            No </label>
+                                    </li>
+
+                                </ul>
+                                {
+                                    error ? <div className="error"><p>this is required</p></div> : null
+                                }
+                            </div>
+
+                        
+
+                         {/* 5th question */}
+                         <div className="form-row radio-buttons">
+                            <h2>5.Can you easily find the Listed Partner in UjustBe App for your requirements?<sup>*</sup> </h2>
+                            <ul>
+
+                                    <li>
+                                        <label htmlFor="5A">
+                                            <input
+                                                id="5A"
+                                                value="Yes"
+                                                name="questionFive"
+                                                type="radio"
+                                                onChange={questionFive}
+                                                checked={fivecheck == 'Yes'} />
+                                            <div className='custom_radio'></div>
+                                            Yes</label>
                                     </li>
 
                                     <li>
-                                        <label htmlFor="4C">
+                                        <label htmlFor="5B">
                                             <input
-                                                id="4C"
-                                                value="Already-Always Listening"
-                                                name="questionFour"
+                                                id="5B"
+                                                value="No"
+                                                name="questionFive"
                                                 type="radio"
-                                                onChange={questionFour}
-                                                checked={fourcheck == 'Already-Always Listening'} />
+                                                onChange={questionFive}
+                                                checked={fivecheck == 'No'} />
                                             <div className='custom_radio'></div>
-                                            Already-Always Listening</label>
+                                            No </label>
                                     </li>
 
-                                   
-
                                 </ul>
-                                {
-                                    error ? <div className="error"><p>this is required</p></div> : null
-                                }
-                            </div>
+                            {
+                                error ? <div className="error"><p>this is required</p></div> : null
+                            }
 
-                            {/* checkbox */}
+                        </div>
 
+                        {/* 6th question */}
+                        <div className="form-row radio-buttons">
+                            <h2>6. Do you want to visit UJustBe office to meet Listed Partners to know them in person? <sup>*</sup>  </h2>
+                            <ul>
 
-                             {/* 5th multiple check box */}
-                            <div className="form-row radio-buttons">
-                                <h2>5. Do you need immediate help/support from the Nucleus Team in the below areas? <sup>*</sup></h2>
-                                <ul>
+                                <li>
 
-                                    
-                                    <li className='checkbox-style'>
-                                        {fivecheck && fivecheck.map((fivedata)=>(
-                                        <>
+                                    <label htmlFor="6A">
+                                        <input
+                                            id="6A"
+                                            value="Yes"
+                                            name="questionSix"
+                                            type="radio"
+                                            onChange={questionSix}
+                                            checked={sixcheck == 'Yes'} />
+                                        <div className='custom_radio'></div>
+                                        Yes </label>
+                                </li>
+                                <li>
+                                    <label htmlFor="6B">
+                                        <input
+                                            id="6B"
+                                            value="No"
+                                            name="questionSix"
+                                            type="radio"
+                                            onChange={questionSix}
+                                            checked={sixcheck == 'No'} />
+                                        <div className='custom_radio'></div>
+                                        No</label>
+                                </li>
 
-                                        <div > 
-    
-                                                    <input
+                            </ul>
+                            {
+                                error ? <div className="error"><p>this is required</p></div> : null
+                            }
 
-                                                        id={fivedata.name}
-                                                        value={fivedata}
-                                                        name={fivedata.name}
-                                                        checked={fivedata?.isChecked || false }
-                                                        type="checkbox"
-                                                    
-                                                        onChange={questionFive} />
-                                                
-                                                    <label  className='checkbox-label' htmlFor={fivedata.name}> {fivedata.name} </label>
-                                        </div>
-                                        </>
-                                        ))}
-                                    </li>
-                            
-
-                                
-                                </ul>
-                                {
-                                    error ? <div className="error"><p>this is required</p></div> : null
-                                }
-
-                            </div>
-
-                            {/* 6th question */}
-                            <div className="form-row radio-buttons">
-                                <h2>6. Which of the below outcomes of Inclusiveness that you think you can achieve after this session?<sup>*</sup> </h2>
-                                <ul>
-
-                                   
-                                <li className='checkbox-style'>
-                                        {sixcheck && sixcheck.map((sixdata)=>(
-                                        <>
-
-                                        <div > 
-    
-                                                    <input
-
-                                                        id={sixdata.name}
-                                                        value={sixdata}
-                                                        name={sixdata.name}
-                                                        checked={sixdata?.isChecked || false }
-                                                        type="checkbox"
-                                                    
-                                                        onChange={questionSix} />
-                                                
-                                                    <label  className='checkbox-label' htmlFor={sixdata.name}> {sixdata.name} </label>
-                                        </div>
-                                        </>
-                                        ))}
-                                    </li>
-                                 
-
-
-                                </ul>
-                                {
-                                    error ? <div className="error"><p>this is required</p></div> : null
-                                }
-
-                            </div>
+                        </div>
 
 
 
