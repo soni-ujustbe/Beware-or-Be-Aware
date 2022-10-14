@@ -643,6 +643,7 @@ const Eventdetail = ({ username }) => {
               <th>Username</th>
               
               <th>Question 1</th>
+              <th>Question 1 input</th>
               <th>Question 2</th>
               {/* <th>Question 2 input</th> */}
               <th>Question 3</th>
@@ -671,8 +672,8 @@ const Eventdetail = ({ username }) => {
                   <tr key={key}>
                     <td>{key + 1}</td>
                     <td>{eventdata.username}</td>
-                    <td>{eventdata.PostOneAns} [{eventdata.PostOneInput}]</td>
-                    
+                    <td>{eventdata.PostOneAns}</td>
+                    <td>{eventdata.PostOneInput}</td>
                     <td>{eventdata.PostTwoAns}</td>
                     
                
